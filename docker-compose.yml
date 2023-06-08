@@ -2,12 +2,15 @@ version: '2'
 services:
  unifi-controller:
    container_name: unifi.controller-latest
-   image: jacobalberty/unifi:latest
+   image: linuxserver/unifi-controller:latest
+   #jacobalberty/unifi:latest
+   #linuxserver/unifi-controller:latest
    restart: always
    volumes:
      - '/mnt/sharedata/unifi-controller/data/lib:/var/lib/unifi'
      - '/mnt/sharedata/unifi-controller/data/log:/var/log/unifi'
      - '/mnt/sharedata/unifi-controller/data/run:/var/run/unifi'
+     - '/mnt/sharedata/unifi-controller/data/config:/config'
    ports:
      - '3478:3478/udp'
      - '10001:10001/udp'
@@ -17,6 +20,8 @@ services:
      - '8443:8443/tcp'
      - '8843:8843/tcp'
    environment:
+     - PUID=0 # for UserID
+     - PGID=0
      - TZ=Canada/Toronto
    labels:
      - 'unifi-controller'
